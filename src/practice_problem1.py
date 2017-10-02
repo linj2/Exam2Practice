@@ -43,8 +43,8 @@ def main():
     # run_test_append_string()
     # run_test_double()
     # run_test_shrink()
-    run_test_double_then_shrink()
-#     run_test_reset()
+    # run_test_double_then_shrink()
+    run_test_reset()
 #     run_test_steal()
 #     run_test_get_history()
 #     run_test_combined_box()
@@ -108,7 +108,8 @@ class Box(object):
         self.volume = volume
         self.new_contents = ''
         self.o_volume = volume
-
+        self.character = 0
+        self.o_contents = contents
     def append_string(self, additional_contents):
         """
         What comes in:
@@ -191,7 +192,7 @@ class Box(object):
             stuff_to_return = stuff_to_return + additional_contents[k]
 
         # Return the result from the previous loop:
-
+        self.character = len(stuff_to_return)
         return stuff_to_return
 
 
@@ -279,7 +280,7 @@ class Box(object):
           :type new_volume: int
         """
         # --------------------------------------------------------------
-        # TODO: 5. Implement and test this function.
+        # TODONE: 5. Implement and test this function.
         #     The testing code is already written for you (above).
         # --------------------------------------------------------------
         # --------------------------------------------------------------
@@ -303,7 +304,6 @@ class Box(object):
             string += self.contents[k]
         self.contents = string
         return add_string
-
 
     def double_then_shrink(self, new_volume):
         """
@@ -349,7 +349,7 @@ class Box(object):
           :type new_volume: int
         """
         # --------------------------------------------------------------
-        # TODO: 6. Implement and test this function.
+        # TODONE: 6. Implement and test this function.
         #     The testing code is already written for you (above).
         # --------------------------------------------------------------
         # --------------------------------------------------------------
@@ -357,9 +357,8 @@ class Box(object):
         #    DIFFICULTY:      5
         #    TIME ESTIMATE:   5 minutes.
         # --------------------------------------------------------------
-        # self.append_string(self.contents)
-        self.volume = new_volume
-        return len(self.append_string(self.contents))
+        self.double()
+        return len(self.shrink(new_volume))+self.character
 
     def reset(self):
         """
@@ -379,6 +378,8 @@ class Box(object):
         #    DIFFICULTY:      4
         #    TIME ESTIMATE:   5 minutes.
         # --------------------------------------------------------------
+        self.contents = self.o_contents
+        self.volume = self.o_volume
 
     def steal(self, other_box):
         """
